@@ -59,6 +59,7 @@ let matrixColumns = [];
 let timers = [];
 let progress = 0;
 let popupId = 0;
+let fullscreenArmed = true;
 
 function fitCanvas() {
   const dpr = window.devicePixelRatio || 1;
@@ -184,17 +185,33 @@ function updateProgress() {
 
 async function requestFullscreen() {
   const root = document.documentElement;
-  if (root.requestFullscreen) {
+  if (!document.fullscreenElement && root.requestFullscreen) {
     try {
       await root.requestFullscreen({ navigationUI: "hide" });
+      fullscreenArmed = false;
     } catch {
       // Some browsers reject fullscreen even after a click; the prank still runs normally.
     }
   }
 }
 
-function startPrank() {
+function requestMobileImmersion() {
+  window.scrollTo(0, 1);
   requestFullscreen();
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock("portrait").catch(() => {});
+  }
+}
+
+function requestFullscreenFromGesture() {
+  if (!fullscreenArmed) {
+    return;
+  }
+  requestMobileImmersion();
+}
+
+function startPrank() {
+  requestMobileImmersion();
   prankPanel.classList.remove("is-hidden");
   ticker.textContent = " ALERT: UNUSUAL ACTIVITY DETECTED • COPYING ABSOLUTELY NOTHING • THIS IS A PRANK SEQUENCE • ";
   terminal.textContent = "";
@@ -224,6 +241,9 @@ function finishPrank() {
 
 window.addEventListener("resize", fitCanvas);
 window.addEventListener("load", startPrank);
+window.addEventListener("click", requestFullscreenFromGesture, { passive: true });
+window.addEventListener("touchstart", requestFullscreenFromGesture, { passive: true });
+window.addEventListener("pointerdown", requestFullscreenFromGesture, { passive: true });
 
 fitCanvas();
 drawMatrix();
