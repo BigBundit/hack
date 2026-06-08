@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>System Diagnostic</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+
+    <main class="app" aria-live="polite">
+      <section id="prankPanel" class="prank-panel is-hidden">
+        <header class="topbar">
+          <div class="topbar-title">
+            <span class="status-dot danger"></span>
+            <span>REMOTE SESSION ACTIVE</span>
+          </div>
+          <div id="clock" class="clock">00:00:00</div>
+        </header>
+
+        <div class="grid">
+          <aside class="sidebar">
+            <div class="metric">
+              <span>CPU TRACE</span>
+              <strong id="cpuMetric">0%</strong>
+            </div>
+            <div class="metric">
+              <span>PACKETS</span>
+              <strong id="packetMetric">0</strong>
+            </div>
+            <div class="metric">
+              <span>KEYS FOUND</span>
+              <strong id="keyMetric">0</strong>
+            </div>
+            <div class="mini-bars" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </aside>
+
+          <section class="terminal-shell">
+            <div class="terminal-header">
+              <span></span><span></span><span></span>
+              <label>root@unknown-node:/payload</label>
+            </div>
+            <pre id="terminal" class="terminal"></pre>
+          </section>
+
+          <section class="scanner">
+            <div class="scan-frame">
+              <div class="scan-line"></div>
+              <div class="crosshair"></div>
+            </div>
+            <div class="progress-block">
+              <div class="progress-label">
+                <span id="phaseLabel">Initializing trace</span>
+                <strong id="percentLabel">0%</strong>
+              </div>
+              <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="alert-strip">
+          <span id="ticker"></span>
+        </footer>
+
+        <div id="popupLayer" class="popup-layer" aria-hidden="true"></div>
+      </section>
+
+      <section id="blankPanel" class="blank-panel is-hidden" aria-hidden="true"></section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
