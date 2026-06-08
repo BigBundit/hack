@@ -122,7 +122,7 @@ function setMetrics() {
 
 function spawnPopup() {
   const activePopups = popupLayer.querySelectorAll(".hack-popup");
-  if (activePopups.length > 11) {
+  if (activePopups.length > 5) {
     activePopups[0].remove();
   }
 
@@ -217,8 +217,8 @@ function startPrank() {
   terminal.textContent = "";
   popupLayer.innerHTML = "";
   progress = 0;
-  for (let i = 0; i < 4; i++) {
-    setTimeout(spawnPopup, i * 120);
+  for (let i = 0; i < 2; i++) {
+    setTimeout(spawnPopup, i * 160);
   }
 
   timers = [
@@ -226,7 +226,7 @@ function startPrank() {
     setInterval(updateProgress, 280),
     setInterval(setClock, 500),
     setInterval(setMetrics, 210),
-    setInterval(spawnPopup, 330)
+    setInterval(spawnPopup, 660)
   ];
 }
 
